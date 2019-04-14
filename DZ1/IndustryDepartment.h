@@ -4,7 +4,7 @@
 
 class IndustryDepartment : public Department {
 private:
-	std::string PATH;
+	//std::string PATH;
 	std::string nameOfDepartment;
 	std::string SaEC;			 //Scientific and educational complex
 	int numOfSubdepartments;
@@ -17,7 +17,7 @@ private:
 
 		std::vector<InfoOfDisciplineBySubdepartments> Disciplines;
 	};
-	std::vector <InfoOfSubdepartment> Subdepartments; // вектор кафедръ
+	std::vector <InfoOfSubdepartment> Subdepartments; // вектор кафедр
 
 
 	struct InfoOfDisciplinesByOrganizations {

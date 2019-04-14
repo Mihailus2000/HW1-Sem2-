@@ -14,6 +14,7 @@ class BD {
 	int numOfBaseD, numOfIndD;
 	std::vector<Department*> Container;
 	std::string NAME;
+	std::string PATH = "";
 	bool Same_typed;
 public:
 	BD(std::string name, bool Same_Typed) : NAME(name),Same_typed(Same_Typed) {}
@@ -22,7 +23,33 @@ public:
 		Container.push_back(D_t);
 	}
 
+
+	void WriteToFile() {
+	std::ofstream fout;
+	fout.open(PATH, std::ios_base::app);
+	
+	for (int ind = 0; ind < Container.size(); ind++) {
+		fout << "{" << Container[ind]->getNOD() << ":{" << Container[ind]->getSaEC() << "},{";
+		for (int i = 0; i < Container[ind]->getnumOfSub ; i++) {
+			fout << Subdepartments[i].nameOfSubdep << ":{";
+			for (int j = 0; j < Subdepartments[i].numOfDisciplines; j++) {
+				fout << Subdepartments[i].Disciplines[j].name << ":<" <<
+					Subdepartments[i].Disciplines[j].numberOfTeachers << ">";
+				if (j != j < Subdepartments[i].numOfDisciplines - 1)
+					fout << ";";
+				else
+					fout << "}";
+			}
+			if (i != numOfSubdepartments - 1)
+				fout << "/";
+			else
+				fout << "}";
+		}
+	}
+
 };
+
+
 //std::vector<BD*> BaseData;
 std::unordered_map<std::string, BD*> BaseData; // ’–¿Õ»À»Ÿ≈ ¬—≈’ ¡ƒ
 
