@@ -8,6 +8,29 @@
 
 
 class Department {
+	struct InfoOfDisciplineBySubdepartments {
+		std::string name;
+		int numberOfTeachers;
+	};
+	struct InfoOfSubdepartment {
+		std::string nameOfSubdep;
+		int numOfDisciplines;
+		std::vector<InfoOfDisciplineBySubdepartments> Disciplines;
+	};
+
+
+	struct InfoOfDisciplinesByOrganizations {
+		std::string name;
+		int numberOfTeachers;
+	};
+	struct Info {
+		std::vector<InfoOfDisciplinesByOrganizations> Disciplines;
+	};
+	
+
+
+
+
 public:
 	Department() = default;
 	~Department() = default;

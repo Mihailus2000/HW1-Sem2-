@@ -18,7 +18,7 @@ private:
 		int numOfDisciplines;
 		std::vector<InfoOfDisciplineBySubdepartments> Disciplines;
 	};
-
+	
 	std::vector <InfoOfSubdepartment> Subdepartments; // вектор кафедр
 public:
 	BaseDepartment(std::string name) : nameOfDepartment(name) {}
