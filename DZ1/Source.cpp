@@ -29,9 +29,12 @@ public:
 	fout.open(PATH, std::ios_base::app);
 	
 	for (int ind = 0; ind < Container.size(); ind++) {
-		fout << "{" << Container[ind]->getNOD() << ":{" << Container[ind]->getSaEC() << "},{";
-		for (int i = 0; i < Container[ind]->getnumOfSub ; i++) {
-			fout << Subdepartments[i].nameOfSubdep << ":{";
+		Department* DepElm = Container[ind];
+		fout << "{" << DepElm->getNOD() << ":{" << DepElm->getSaEC() << "},{";
+		for (int i = 0; i < DepElm->getnumOfSub ; i++) {
+			Subdepartment* SubDepElm = &(DepElm->getVecSubDep(i));
+			fout << SubDepElm. << ":{"; /// ÂÎÒ ÒÓÒ ß ÏÎ×ÅÌÓ ÒÎ  ÍÅ ÌÎÃÓ ÏÎËÓ×ÈÒÜ ÄÎÑÒÓÏ Ê
+										/// class Subdepartment à èìåííî, std::vector<Discipline> vecDisc; 
 			for (int j = 0; j < Subdepartments[i].numOfDisciplines; j++) {
 				fout << Subdepartments[i].Disciplines[j].name << ":<" <<
 					Subdepartments[i].Disciplines[j].numberOfTeachers << ">";

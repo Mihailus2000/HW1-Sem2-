@@ -8,21 +8,19 @@ private:
 	std::string SaEC;			 //Scientific and educational complex
 	std::string nameOfDepartment;
 	int numOfSubdepartments;
-
-	struct InfoOfDisciplineBySubdepartments {
-		std::string name;
-		int numberOfTeachers;
-	};
-	struct InfoOfSubdepartment {
-		std::string nameOfSubdep;
-		int numOfDisciplines;
-		std::vector<InfoOfDisciplineBySubdepartments> Disciplines;
-	};
+	Subdepartment D;
 	
-	std::vector <InfoOfSubdepartment> Subdepartments; // вектор кафедр
+	
+	std::vector<Subdepartment> vecSubDep; // вектор кафедр
 public:
+	
+	//std::vector <InfoOfSubdepartment> Subdepartments; // вектор кафедр
+
+
 	BaseDepartment(std::string name) : nameOfDepartment(name) {}
-	virtual InfoOfSubdepartment getVector(int index) { return (Subdepartments[index]); };
+
+
+	virtual Subdepartment getVecSubDep(int index) { return (vecSubDep[index]); };
 	virtual std::string getNOD() { return nameOfDepartment; }
 	virtual int getnumOfSub() {	return numOfSubdepartments; }
 	virtual std::string getSaEC() { return SaEC;  }
