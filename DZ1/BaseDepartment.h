@@ -17,11 +17,12 @@ private:
 public:
 	
 	BaseDepartment(std::string name) : nameOfDepartment(name) {}
+	virtual ~BaseDepartment() = default;
 
 	//virtual Subdepartment getVecSubDep(int index) { return (vecSubDep[index]); }
 	virtual InIt* getInfo() { return Subdep; }
 	
-	virtual int getnumOfSub() { return numOfSubdepartments; }
+	virtual int getNumOfSub() { return numOfSubdepartments; }
 
 	virtual std::string getSaEC() { return SaEC; }
 	virtual std::string getNameOfDep() { return nameOfDepartment; }

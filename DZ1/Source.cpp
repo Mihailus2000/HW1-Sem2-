@@ -34,7 +34,7 @@ public:
 				Department* Elem_Department = Container[ind];
 
 				fout << "{" << Elem_Department->getNameOfDep() << ":{" << Elem_Department->getSaEC() << "},{"; //Начало (2),(3)
-				for (int i = 0; i < Elem_Department->getnumOfSub(); i++) {
+				for (int i = 0; i < Elem_Department->getNumOfSub(); i++) {
 					InIt* ElemInfoOfParts = Elem_Department->getInfo();
 					Subdepartment SubDepElm = ElemInfoOfParts->getVecSubDep(i);
 					
@@ -49,7 +49,7 @@ public:
 						else
 							fout << "}";						// Конец (4)
 					}
-					if (i != Elem_Department->getnumOfSub() - 1) //?????
+					if (i != Elem_Department->getNumOfSub() - 1) //?????
 						fout << "/";
 					else
 						fout << "}";							// Конец (3)					
@@ -72,7 +72,7 @@ public:
 							else
 								fout << "}";									// Конец (4)
 						}
-						if (i != Elem_Department->getnumOfSub() - 1) //?????
+						if (i != Elem_Department->getNumOfSub() - 1) //?????
 							fout << "/";
 						else
 							fout << "}";						// Конец (3)

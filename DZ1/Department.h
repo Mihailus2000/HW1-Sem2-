@@ -20,7 +20,7 @@ public:
 	/*virtual Organization getVecOrganizations(int index) = 0;
 	virtual Subdepartment getVecSubDep(int index) = 0;*/
 	virtual InIt* getInfo() = 0;
-	virtual int getnumOfSub() = 0;
+	virtual int getNumOfSub() = 0;
 	virtual int getNumOfOrganizations() = 0;
 	virtual int calcNumOfSubjects() = 0;
 

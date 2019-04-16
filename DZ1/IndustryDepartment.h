@@ -18,6 +18,7 @@ private:
 public:
 	
 	IndustryDepartment(std::string name) : nameOfDepartment(name) {}
+	virtual ~IndustryDepartment() = default;
 
 	/*virtual Organization getVecOrganizations(int index) { return vecOrganizations[index]; }
 	virtual Subdepartment getVecSubDep(int index) { return vecSubDep[index]; }*/
@@ -29,9 +30,9 @@ public:
 	virtual std::string getNameOfDep() { return nameOfDepartment; }
 	virtual int getNumOfSub() { return numOfSubdepartments; }
 	virtual int getNumOfOrganizations() { return numOfOrganizations; }
-	virtual void WriteToFile();
-	virtual void readFromFile();
-	int calcNumOfSubjects();
+	virtual void WriteToFile() {};
+	virtual void readFromFile() {};
+	int calcNumOfSubjects() { return 0; };
 
 	
 

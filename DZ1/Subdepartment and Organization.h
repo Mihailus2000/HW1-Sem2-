@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-//class InIt;
+class InIt;
 
 struct Discipline {
 	std::string name;
