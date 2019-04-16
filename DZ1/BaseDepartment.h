@@ -1,31 +1,33 @@
 #pragma once
 #include "Department.h"
+#include "Subdepartment and Organization.h"
 #include <vector>
+
+
 
 class BaseDepartment : public Department {
 private:
-
+	const std::string classOfDepartment = "BASE";
 	std::string SaEC;			 //Scientific and educational complex
 	std::string nameOfDepartment;
 	int numOfSubdepartments;
-	Subdepartment D;
+	InIt* Subdep = new InIt;
 
-
-	std::vector<Subdepartment> vecSubDep; // вектор кафедр
+	//std::vector<Subdepartment> vecSubDep; // вектор кафедр
 public:
-
-	//std::vector <InfoOfSubdepartment> Subdepartments; // вектор кафедр
-
-
+	
 	BaseDepartment(std::string name) : nameOfDepartment(name) {}
 
-
-	virtual Subdepartment getVecSubDep(int index) { return (vecSubDep[index]); };
-	virtual std::string getNOD() { return nameOfDepartment; }
+	//virtual Subdepartment getVecSubDep(int index) { return (vecSubDep[index]); }
+	virtual InIt* getInfo() { return Subdep; }
+	
 	virtual int getnumOfSub() { return numOfSubdepartments; }
+
 	virtual std::string getSaEC() { return SaEC; }
+	virtual std::string getNameOfDep() { return nameOfDepartment; }
+	virtual std::string getClass() { return classOfDepartment; }
+	virtual int getNumOfOrganizations() { return -1; } //CODE ERROR
 	virtual void readFromFile(/*std::string*/);
-	virtual void WriteToFile(/*std::string*/);
 	virtual int calcNumOfSubjects();
 };
-#pragma once
+

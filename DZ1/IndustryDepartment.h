@@ -1,40 +1,38 @@
 #pragma once
 #include "Department.h"
+#include "Subdepartment and Organization.h"
 #include <vector>
 
 class IndustryDepartment : public Department {
 private:
 	//std::string PATH;
+	const std::string classOfDepartment = "IND";
 	std::string nameOfDepartment;
 	std::string SaEC;			 //Scientific and educational complex
 	int numOfSubdepartments;
-
-	struct InfoOfDisciplineBySubdepartments {
-		std::string name;
-		int numberOfTeachers;
-	};
-	struct InfoOfSubdepartment {
-
-		std::vector<InfoOfDisciplineBySubdepartments> Disciplines;
-	};
-	std::vector <InfoOfSubdepartment> Subdepartments; // вектор кафедр
-
-
-	struct InfoOfDisciplinesByOrganizations {
-		std::string name;
-		int numberOfTeachers;
-	};
-	struct Info {
-		std::vector<InfoOfDisciplinesByOrganizations> Disciplines;
-	};
-	std::vector <Info> Organizations;
-
-
+	int numOfOrganizations;
+	InIt* SubAndOrgan = new InIt;
+	//
+	//std::vector<Subdepartment> vecSubDep; // вектор кафедр
+	//std::vector<Organization> vecOrganizations; // вектор организаций
 public:
+	
+	IndustryDepartment(std::string name) : nameOfDepartment(name) {}
+
+	/*virtual Organization getVecOrganizations(int index) { return vecOrganizations[index]; }
+	virtual Subdepartment getVecSubDep(int index) { return vecSubDep[index]; }*/
+	virtual InIt* getInfo() { return SubAndOrgan; }
+	virtual std::string getClass() { return classOfDepartment; }
+	virtual std::string getSaEC() { return SaEC; }
+
+
+	virtual std::string getNameOfDep() { return nameOfDepartment; }
+	virtual int getNumOfSub() { return numOfSubdepartments; }
+	virtual int getNumOfOrganizations() { return numOfOrganizations; }
 	virtual void WriteToFile();
 	virtual void readFromFile();
 	int calcNumOfSubjects();
 
-	IndustryDepartment(std::string path) : PATH(path) {};
+	
 
 };

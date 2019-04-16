@@ -131,6 +131,7 @@
     <ClInclude Include="BaseDepartment.h" />
     <ClInclude Include="Department.h" />
     <ClInclude Include="IndustryDepartment.h" />
+    <ClInclude Include="Subdepartment and Organization.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

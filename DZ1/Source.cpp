@@ -1,5 +1,6 @@
 #include "BaseDepartment.h"
-#include "IndustryDepartment.h"
+#include "Subdepartment and Organization.h"
+//#include "IndustryDepartment.h"
 
 #include <iostream>
 #include <string>
@@ -17,7 +18,7 @@ class BD {
 	std::string PATH = "";
 	bool Same_typed;
 public:
-	BD(std::string name, bool Same_Typed) : NAME(name),Same_typed(Same_Typed) {}
+	BD(std::string name, bool Same_Typed) : NAME(name), Same_typed(Same_Typed) {}
 
 	void setDepartment(Department* D_t) {
 		Container.push_back(D_t);
@@ -25,97 +26,133 @@ public:
 
 
 	void WriteToFile() {
-	std::ofstream fout;
-	fout.open(PATH, std::ios_base::app);
-	
-	for (int ind = 0; ind < Container.size(); ind++) {
-		Department* DepElm = Container[ind];
-		fout << "{" << DepElm->getNOD() << ":{" << DepElm->getSaEC() << "},{";
-		for (int i = 0; i < DepElm->getnumOfSub ; i++) {
-			Subdepartment* SubDepElm = &(DepElm->getVecSubDep(i));
-			fout << SubDepElm. << ":{"; /// ¬Œ“ “”“ ﬂ œŒ◊≈Ã” “Œ  Õ≈ ÃŒ√” œŒÀ”◊»“‹ ƒŒ—“”œ  
-										/// class Subdepartment ‡ ËÏÂÌÌÓ, std::vector<Discipline> vecDisc; 
-			for (int j = 0; j < Subdepartments[i].numOfDisciplines; j++) {
-				fout << Subdepartments[i].Disciplines[j].name << ":<" <<
-					Subdepartments[i].Disciplines[j].numberOfTeachers << ">";
-				if (j != j < Subdepartments[i].numOfDisciplines - 1)
-					fout << ";";
+			std::ofstream fout;
+			fout.open(PATH, std::ios_base::app);
+			fout << "{";										// Õ‡˜‡ÎÓ (1)	
+			for (int ind = 0; ind < Container.size(); ind++) {
+
+				Department* Elem_Department = Container[ind];
+
+				fout << "{" << Elem_Department->getNameOfDep() << ":{" << Elem_Department->getSaEC() << "},{"; //Õ‡˜‡ÎÓ (2),(3)
+				for (int i = 0; i < Elem_Department->getnumOfSub(); i++) {
+					InIt* ElemInfoOfParts = Elem_Department->getInfo();
+					Subdepartment SubDepElm = ElemInfoOfParts->getVecSubDep(i);
+					
+					fout << SubDepElm.getNameOfSubdep() << ":{"; //Õ‡˜‡ÎÓ (4)
+
+					for (int j = 0; j < SubDepElm.getNumOfDisciplines(); j++) {
+						Discipline DiscElem = SubDepElm.getVecDisc(j);
+						fout << DiscElem.name << ":<" <<
+							DiscElem.numberOfTeachers << ">";
+						if (j != /*j <*/ SubDepElm.getNumOfDisciplines() - 1) //????
+							fout << ";";
+						else
+							fout << "}";						//  ÓÌÂˆ (4)
+					}
+					if (i != Elem_Department->getnumOfSub() - 1) //?????
+						fout << "/";
+					else
+						fout << "}";							//  ÓÌÂˆ (3)					
+				}
+
+				if (Elem_Department->getClass() == "IND") {
+					fout << ",{";								// Õ‡˜‡ÎÓ (3)
+					for (int i = 0; i < Elem_Department->getNumOfOrganizations(); i++) {
+						InIt* ElemInfoOfParts = Elem_Department->getInfo();
+						Organization SubDepElm = ElemInfoOfParts->getVecOrganizations(i);
+
+						fout << SubDepElm.getNameOfOrganization() << ":{";		// Õ‡˜‡ÎÓ (4)
+
+						for (int j = 0; j < SubDepElm.getNumOfDisciplines(); j++) {
+							Discipline DiscElem = SubDepElm.getVecDisc(j);
+							fout << DiscElem.name << ":<" <<
+								DiscElem.numberOfTeachers << ">";
+							if (j != /*j <*/ SubDepElm.getNumOfDisciplines() - 1) //????
+								fout << ";";
+							else
+								fout << "}";									//  ÓÌÂˆ (4)
+						}
+						if (i != Elem_Department->getnumOfSub() - 1) //?????
+							fout << "/";
+						else
+							fout << "}";						//  ÓÌÂˆ (3)
+					}
+				}
+				
+				if (ind == Container.size() - 1)
+					fout << "}";																				//  ÓÌÂˆ (2)
 				else
-					fout << "}";
+					fout << "&";
 			}
-			if (i != numOfSubdepartments - 1)
-				fout << "/";
-			else
-				fout << "}";
-		}
+			fout << "}";								//  ÓÌÂˆ (1)
 	}
 
 };
 
+	//std::vector<BD*> BaseData;
+	std::unordered_map<std::string, BD*> BaseData; // ’–¿Õ»À»Ÿ≈ ¬—≈’ ¡ƒ
 
-//std::vector<BD*> BaseData;
-std::unordered_map<std::string, BD*> BaseData; // ’–¿Õ»À»Ÿ≈ ¬—≈’ ¡ƒ
+	bool Commands(std::string CMD) {
+		int comand;
+		std::string nameOfBD, typeOfD;
+		std::unordered_map <std::string, BD*> ::iterator it;
 
-bool Commands(std::string CMD) {
-	int comand;
-	std::string nameOfBD, typeOfD;
-	std::unordered_map <std::string, BD*> :: iterator it;
+		std::map<std::string, int> MapOfCMD = {
+			{"help",0},{"create s_t bd",1},{"create h_t bd",2}, {"add s_t", 3}, {"add h_t", 4} };
+		auto ind = MapOfCMD.find(CMD);
 
-	std::map<std::string, int> MapOfCMD = {
-		{"help",0},{"create s_t bd",1},{"create h_t bd",2}, {"add s_t", 3}, {"add h_t", 4} };
-	auto ind = MapOfCMD.find(CMD);
-	
-	if (ind->second == 1) {
-		
-		std::cout << "Give name to new BD: <";
-		std::getline(std::cin, nameOfBD);
-		BaseData.insert(std::make_pair(nameOfBD, new BD(nameOfBD, true)));
-		return false;
-	}
-	
-	if(ind->second == 2) {
-		std::cout << "Give name to new BD: <";
-		std::getline(std::cin, nameOfBD);
-		BaseData.insert(std::make_pair(nameOfBD, new BD(nameOfBD, false)));
-		return false;
-	}
-	
-	if (ind->second == 3) {
-		std::cout << "Enter name of BD where add new element:/n";
-		std::cout << "<"; std::getline(std::cin, nameOfBD); std::cout << ">\n";
-		if (BaseData.find(nameOfBD) != BaseData.end()) {
-			it = BaseData.find(nameOfBD);
+		if (ind->second == 1) {
+
+			std::cout << "Give name to new BD: <";
+			std::getline(std::cin, nameOfBD);
+			BaseData.insert(std::make_pair(nameOfBD, new BD(nameOfBD, true)));
+			return false;
 		}
-		std::cout << "Enter type of Department: <b> to base department or <i> to industry department:\n";
-		std::cout << "<"; std::getline(std::cin, typeOfD); std::cout << ">\n";
-		if (typeOfD == "b" || typeOfD == "i")
-			if (typeOfD == "b") {
-				it->second->setDepartment(new BaseDepartment(nameOfBD));
-			}
-			else {
-				it->second->setDepartment(new IndustryDepartment(nameOfBD));
-			}
-		//it->second->setDepartment()
-	}
 
-	if (ind == MapOfCMD.end()) {
-		std::cout << "Unknown command\n";
+		if (ind->second == 2) {
+			std::cout << "Give name to new BD: <";
+			std::getline(std::cin, nameOfBD);
+			BaseData.insert(std::make_pair(nameOfBD, new BD(nameOfBD, false)));
+			return false;
+		}
+
+		if (ind->second == 3) {
+			std::cout << "Enter name of BD where add new element:/n";
+			std::cout << "<"; std::getline(std::cin, nameOfBD); std::cout << ">\n";
+			if (BaseData.find(nameOfBD) != BaseData.end()) {
+				it = BaseData.find(nameOfBD);
+			}
+			std::cout << "Enter type of Department: <b> to base department or <i> to industry department:\n";
+			std::cout << "<"; std::getline(std::cin, typeOfD); std::cout << ">\n";
+			if (typeOfD == "b" || typeOfD == "i") {
+				if (typeOfD == "b") {
+					it->second->setDepartment(new BaseDepartment(nameOfBD));
+				}
+				else {
+					/*it->second->setDepartment(new IndustryDepartment(nameOfBD));*/
+				}
+			}
+			//it->second->setDepartment()
+		}
+
+		if (ind == MapOfCMD.end()) {
+			std::cout << "Unknown command\n";
+			return false;
+		}
 		return false;
 	}
-	return false;
-}
 
-int main() {
-	
+	int main() {
 
-	std::cout << "Welcome to Mihail's Base Date of University!\n";
-	bool ENDPROGRAMM = false;
-	std::string command;
-	std::cout << "Enter \'Help\' to see all available commands OR enter command:\n";
-	while (!ENDPROGRAMM) {
-		std::cout << "<"; std::getline(std::cin, command); std::cout << ">\n";
-		std::transform(command.begin(), command.end(), command.begin(), tolower);
-		ENDPROGRAMM = Commands(command);
+
+		std::cout << "Welcome to Mihail's Base Date of University!\n";
+		bool ENDPROGRAMM = false;
+		std::string command;
+		std::cout << "Enter \'Help\' to see all available commands OR enter command:\n";
+		while (!ENDPROGRAMM) {
+			std::cout << "<"; std::getline(std::cin, command); std::cout << ">\n";
+			std::transform(command.begin(), command.end(), command.begin(), tolower);
+			ENDPROGRAMM = Commands(command);
+		}
+		return 0;
 	}
-	return 0;
-}
