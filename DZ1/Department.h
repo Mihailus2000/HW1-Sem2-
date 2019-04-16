@@ -9,7 +9,7 @@
 
 
 
-class Department : public Subdepartment, public Organization, public InIt	 {
+class Department : public Subdepartment, public Organization, public InIt 	 {
 
 	
 public:

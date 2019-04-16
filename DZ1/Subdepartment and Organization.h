@@ -3,14 +3,7 @@
 #include <string>
 #include <vector>
 
-
-class InIt {
-	std::vector<Subdepartment> vecSubDep; // вектор кафедр
-	std::vector<Organization> vecOrganizations; // вектор организаций
-public:
-	Subdepartment getVecSubDep(int index) { return (vecSubDep[index]); }
-	Organization getVecOrganizations(int index) { return vecOrganizations[index]; }
-};
+//class InIt;
 
 struct Discipline {
 	std::string name;
@@ -52,5 +45,13 @@ public:
 		return numOfDisciplines;
 	}
 	
+	
 };
 
+class InIt {
+	std::vector<Subdepartment> vecSubDep; // вектор кафедр
+	std::vector<Organization> vecOrganizations; // вектор организаций
+public:
+	Subdepartment getVecSubDep(int index) { return (vecSubDep[index]); }
+	Organization getVecOrganizations(int index) { return vecOrganizations[index]; }
+};

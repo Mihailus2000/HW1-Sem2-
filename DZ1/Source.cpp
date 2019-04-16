@@ -1,6 +1,6 @@
 #include "BaseDepartment.h"
-#include "Subdepartment and Organization.h"
-//#include "IndustryDepartment.h"
+//#include "Subdepartment and Organization.h"
+#include "IndustryDepartment.h"
 
 #include <iostream>
 #include <string>
@@ -98,7 +98,7 @@ public:
 		std::unordered_map <std::string, BD*> ::iterator it;
 
 		std::map<std::string, int> MapOfCMD = {
-			{"help",0},{"create s_t bd",1},{"create h_t bd",2}, {"add s_t", 3}, {"add h_t", 4} };
+			{"help",0},{"create s_t bd",1},{"create bd",2}, {"add h_t", 3} };
 		auto ind = MapOfCMD.find(CMD);
 
 		if (ind->second == 1) {
@@ -106,15 +106,16 @@ public:
 			std::cout << "Give name to new BD: <";
 			std::getline(std::cin, nameOfBD);
 			BaseData.insert(std::make_pair(nameOfBD, new BD(nameOfBD, true)));
+			std::ofstream(nameOfBD);
 			return false;
 		}
 
-		if (ind->second == 2) {
+		/*if (ind->second == 2) {
 			std::cout << "Give name to new BD: <";
 			std::getline(std::cin, nameOfBD);
 			BaseData.insert(std::make_pair(nameOfBD, new BD(nameOfBD, false)));
 			return false;
-		}
+		}*/
 
 		if (ind->second == 3) {
 			std::cout << "Enter name of BD where add new element:/n";
@@ -129,7 +130,7 @@ public:
 					it->second->setDepartment(new BaseDepartment(nameOfBD));
 				}
 				else {
-					/*it->second->setDepartment(new IndustryDepartment(nameOfBD));*/
+					it->second->setDepartment(new IndustryDepartment(nameOfBD));
 				}
 			}
 			//it->second->setDepartment()
