@@ -10,7 +10,31 @@
 #include <fstream>
 #include <unordered_map>
 #include <iterator>
+#include <conio.h>
+#include <Windows.h>
 
+//------------------------------------------------------------------------------
+int X, Y;
+
+void gotoXY(short x, short y)
+{
+	HANDLE    StdOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	COORD    coord = { x, y };
+	SetConsoleCursorPosition(StdOut, coord);
+}
+void whereXY(int &X, int &Y)
+{
+	HANDLE                        StdOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_SCREEN_BUFFER_INFO    csbi;
+	GetConsoleScreenBufferInfo(StdOut, &csbi);
+	X = csbi.dwCursorPosition.X;
+	
+	HANDLE                        StdOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_SCREEN_BUFFER_INFO    csbi;
+	GetConsoleScreenBufferInfo(StdOut, &csbi);
+	Y = csbi.dwCursorPosition.Y;
+}
+//------------------------------------------------------------------------------
 class BD {
 	int numOfBaseD, numOfIndD;
 	std::vector<Department*> Container;
@@ -98,15 +122,29 @@ public:
 		std::unordered_map <std::string, BD*> ::iterator it;
 
 		std::map<std::string, int> MapOfCMD = {
-			{"help",0},{"create s_t bd",1},{"create bd",2}, {"add h_t", 3} };
+			{"help",0},{"create",1}, {"add", 2} };
 		auto ind = MapOfCMD.find(CMD);
+		if (ind->second == 0) {
+			std::cout << "\t*********************HELP*********************\n";
+			std::cout << "\t <create,NAME>										|| Create new DB with name = NAME\n";
+			std::cout << "\t <calc,DB NAME,DEPARTMENT NAME/ORGANIZATION NAME>	|| Calculate number of disciplines\n";
+			std::cout << "\t <find,DB NAME,DEPARTMENT NAME>						|| Search Department by NAME (and output)\n";
+			std::cout << "\t <add,DB NAME>										|| "
+
+		}
 
 		if (ind->second == 1) {
 
-			std::cout << "Give name to new BD: <";
-			std::getline(std::cin, nameOfBD);
+			std::cout << "Give name to new BD: <";  whereXY(X, Y);
+			std::getline(std::cin, nameOfBD); gotoXY(X, Y);
+			std::cout << ">\n";
 			BaseData.insert(std::make_pair(nameOfBD, new BD(nameOfBD, true)));
-			std::ofstream(nameOfBD);
+			std::ofstream file;
+			
+			file.open(nameOfBD+".txt", std::ios_base::app);
+			if (file.is_open())
+				std::cout << "App: OK\n";
+			file.close();
 			return false;
 		}
 
@@ -117,14 +155,19 @@ public:
 			return false;
 		}*/
 
-		if (ind->second == 3) {
-			std::cout << "Enter name of BD where add new element:/n";
-			std::cout << "<"; std::getline(std::cin, nameOfBD); std::cout << ">\n";
+		if (ind->second == 2) {
+			std::cout << "Enter name of BD where add new element: ";
+			std::cout << "<"; whereXY(X, Y); std::getline(std::cin, nameOfBD);
+			gotoXY(X, Y);
+			std::cout << ">\n";
 			if (BaseData.find(nameOfBD) != BaseData.end()) {
 				it = BaseData.find(nameOfBD);
 			}
 			std::cout << "Enter type of Department: <b> to base department or <i> to industry department:\n";
-			std::cout << "<"; std::getline(std::cin, typeOfD); std::cout << ">\n";
+			std::cout << "<"; whereXY(X, Y); std::getline(std::cin, typeOfD); 
+			gotoXY(X, Y);
+			std::cout << ">\n";
+
 			if (typeOfD == "b" || typeOfD == "i") {
 				if (typeOfD == "b") {
 					it->second->setDepartment(new BaseDepartment(nameOfBD));
@@ -144,14 +187,13 @@ public:
 	}
 
 	int main() {
-
-
-		std::cout << "Welcome to Mihail's Base Date of University!\n";
+		
+		std::cout << "Welcome to Mihail's Base Date of University!\n"; 
 		bool ENDPROGRAMM = false;
 		std::string command;
 		std::cout << "Enter \'Help\' to see all available commands OR enter command:\n";
 		while (!ENDPROGRAMM) {
-			std::cout << "<"; std::getline(std::cin, command); std::cout << ">\n";
+			std::cout << "<"; whereXY(X, Y); std::getline(std::cin, command); gotoXY(X, Y); std::cout << ">\n";
 			std::transform(command.begin(), command.end(), command.begin(), tolower);
 			ENDPROGRAMM = Commands(command);
 		}
