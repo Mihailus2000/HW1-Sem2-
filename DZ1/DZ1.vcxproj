@@ -124,6 +124,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BaseDepartment.cpp" />
+    <ClCompile Include="Commands.h" />
     <ClCompile Include="IndustryDepartment.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
