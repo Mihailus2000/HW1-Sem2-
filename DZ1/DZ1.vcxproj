@@ -125,11 +125,13 @@
   <ItemGroup>
     <ClCompile Include="BaseDepartment.cpp" />
     <ClCompile Include="Commands.h" />
+    <ClCompile Include="DataBase.cpp" />
     <ClCompile Include="IndustryDepartment.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseDepartment.h" />
+    <ClInclude Include="DataBase.h" />
     <ClInclude Include="Department.h" />
     <ClInclude Include="IndustryDepartment.h" />
     <ClInclude Include="Subdepartment and Organization.h" />
