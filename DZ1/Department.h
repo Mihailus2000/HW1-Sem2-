@@ -27,7 +27,7 @@ public:
 	virtual std::string getSaEC() = 0;
 	virtual std::string getNameOfDep() = 0;
 	virtual std::string getClass() = 0;
-
+	virtual void printInfo() = 0;
 	virtual void readFromFile() = 0;
 
 

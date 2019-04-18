@@ -27,3 +27,15 @@ void BaseDepartment::readFromFile(/*std::string*/) {}
 int BaseDepartment::calcNumOfSubjects() {
 	return 0;
 }
+
+void BaseDepartment::printInfo() {
+	std::cout << "# " << nameOfDepartment;
+	for (int i = 0; i < numOfSubdepartments; i++) {
+
+		if (classOfDepartment == "IND") {
+			sumOfSub += SubAndOrgan->getVecOrganizations(j).getNumOfDisciplines();
+		}
+	}
+	std::cout << "sum: " << sumOfSub;
+	std::cout << std::endl;
+}

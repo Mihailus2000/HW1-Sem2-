@@ -32,6 +32,7 @@ public:
 	virtual int getNumOfOrganizations() { return numOfOrganizations; }
 	virtual void WriteToFile() {};
 	virtual void readFromFile() {};
+	virtual void printInfo();
 	int calcNumOfSubjects() { return 0; };
 
 	

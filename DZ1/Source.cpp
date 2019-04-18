@@ -10,46 +10,46 @@
 #include <fstream>
 #include <unordered_map>
 #include <iterator>
+#include <Windows.h>
 
 
+//------------------------------------------------------------------------------
+int X, Y;
 
-////------------------------------------------------------------------------------
-//int X, Y;
-//
-//void gotoXY(short x, short y)
-//{
-//	HANDLE    StdOut = GetStdHandle(STD_OUTPUT_HANDLE);
-//	COORD    coord = { x, y };
-//	SetConsoleCursorPosition(StdOut, coord);
-//}
-//void whereXY(int &X, int &Y)
-//{
-//	HANDLE                        StdOut = GetStdHandle(STD_OUTPUT_HANDLE);
-//	CONSOLE_SCREEN_BUFFER_INFO    csbi;
-//	GetConsoleScreenBufferInfo(StdOut, &csbi);
-//	X = csbi.dwCursorPosition.X;
-//	
-//	HANDLE                        StdOut = GetStdHandle(STD_OUTPUT_HANDLE);
-//	CONSOLE_SCREEN_BUFFER_INFO    csbi;
-//	GetConsoleScreenBufferInfo(StdOut, &csbi);
-//	Y = csbi.dwCursorPosition.Y;
-//}
-////-----------------------------------------------------------------------------
-std::unordered_map<std::string, BD*> BaseData; // ’–¿Õ»À»Ÿ≈ ¬—≈’ ¡ƒ
-
-void Parser(int NumOfValues, std::string value1, std::string value2, std::string value3, std::string CMDin, std::string CMDout) {
-	if (CMDin == "") {
-		//exception
-	}
-	std::string tmp;
-	for (int i = 0; i < CMDin.size(); i++) {
-
-	}
-
+void gotoXY(short x, short y)
+{
+	HANDLE    StdOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	COORD    coord = { x, y };
+	SetConsoleCursorPosition(StdOut, coord);
 }
+void whereXY(int &X, int &Y)
+{
+	HANDLE                        StdOut1 = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_SCREEN_BUFFER_INFO    csbi1;
+	GetConsoleScreenBufferInfo(StdOut1, &csbi1);
+	X = csbi1.dwCursorPosition.X;
+	
+	HANDLE                        StdOut2 = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_SCREEN_BUFFER_INFO    csbi2;
+	GetConsoleScreenBufferInfo(StdOut2, &csbi2);
+	Y = csbi2.dwCursorPosition.Y;
+}
+//-----------------------------------------------------------------------------
+
+
+//void Parser(int NumOfValues, std::string value1, std::string value2, std::string value3, std::string CMDin, std::string CMDout) {
+//	if (CMDin == "") {
+//		//exception
+//	}
+//	std::string tmp;
+//	for (int i = 0; i < CMDin.size(); i++) {
+//
+//	}
+//
+//}
 
 class BD {
-	int numOfBaseD, numOfIndD;
+	int numOfD;
 	std::vector<Department*> Container;
 	std::string NAME;
 	std::string PATH = "";
@@ -59,6 +59,8 @@ public:
 	void setDepartment(Department* D_t) {
 		Container.push_back(D_t);
 	}
+	int getNumOfD() { return numOfD; }
+	Department* getDepartment(int index) { return Container[index]; }
 	void WriteToFile() {
 			std::ofstream fout;
 		fout.open(PATH, std::ios_base::app);
@@ -124,15 +126,15 @@ public:
 };
 	//std::vector<BD*> BaseData;
 	
-
+std::unordered_map<std::string, BD*> BaseData; // ’–¿Õ»À»Ÿ≈ ¬—≈’ ¡ƒ
 	
 bool Commands(std::string CMD) {
 	int comand;
-	std::string nameOfBD, typeOfD;
+	std::string nameOfBD, typeOfD, nameOfDepart;
 	std::unordered_map <std::string, BD*> ::iterator it;
-
+	BD* Obj = nullptr;   //??????????????????
 	std::map<std::string, int> MapOfCMD = {
-		{"help",0},{"create",1}, {"calc", 2},{"find",3},{"add",4},{} };
+		{"help",0},{"create",1}, {"calc", 2},{"find",3},{"add",4},{"remove",5},{"sort",6},{"pick",7},{"output",8},{"list",9} };
 	auto ind = MapOfCMD.find(CMD);
 	if (ind->second == 0) {
 		std::cout << "\t*************************************************************HELP*************************************************************\n";
@@ -157,9 +159,9 @@ bool Commands(std::string CMD) {
 
 	if (ind->second == 1) {
 
-		std::cout << "Give name to new BD: <";
+		std::cout << "Give name to new BD: <"; whereXY(X, Y);
 		std::getline(std::cin, nameOfBD);
-		std::cout << ">\n";
+		gotoXY(X, Y); std::cout << ">\n";
 		BaseData.insert(std::make_pair(nameOfBD, new BD(nameOfBD, true)));
 		std::ofstream file;
 
@@ -176,8 +178,47 @@ bool Commands(std::string CMD) {
 		BaseData.insert(std::make_pair(nameOfBD, new BD(nameOfBD, false)));
 		return false;
 	}*/
-
 	if (ind->second == 2) {
+		std::cout << "Enter NAME of DataBase: <"; whereXY(X, Y); std::getline(std::cin, nameOfBD); gotoXY(X, Y); std::cout << ">\n";
+		auto It = BaseData.find(nameOfBD);
+		if (It != BaseData.end()) {
+		Obj	= It->second;
+		}
+		else {
+			//exception
+		}
+		for (int i = 0; i < Obj->getNumOfD(); i++) {
+			Department* ElDep = Obj->getDepartment(i);
+			ElDep->calcNumOfSubjects();
+			
+		}
+	}
+	if (ind->second == 3) {
+		std::cout << "Enter NAME of DataBase: <"; whereXY(X, Y); std::getline(std::cin, nameOfBD); gotoXY(X, Y); std::cout << ">\n";
+		std::cout << "Enter NAME of Department: <"; whereXY(X, Y); std::getline(std::cin, nameOfDepart); gotoXY(X, Y); std::cout << ">\n";
+		auto It = BaseData.find(nameOfBD);
+		if (It != BaseData.end()) {
+			Obj = It->second;
+		}
+		else {
+			//exception
+		}
+		bool findDep = false;
+		Department* tmp;
+		for (int i = 0; i < Obj->getNumOfD(); i++) {
+			Department* ElDep = Obj->getDepartment(i);
+			if (ElDep->getNameOfDep() == nameOfDepart) {
+				findDep = true;
+				tmp = ElDep;
+			}
+		}
+		if (findDep)
+		{
+			tmp->getInfo();
+		}
+	}
+
+	if (ind->second == 4) {
 		std::cout << "Enter name of BD where add new element: ";
 		std::cout << "<";
 		std::getline(std::cin, nameOfBD);

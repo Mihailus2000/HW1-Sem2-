@@ -23,7 +23,7 @@ public:
 	virtual InIt* getInfo() { return Subdep; }
 	
 	virtual int getNumOfSub() { return numOfSubdepartments; }
-
+	virtual void printInfo();
 	virtual std::string getSaEC() { return SaEC; }
 	virtual std::string getNameOfDep() { return nameOfDepartment; }
 	virtual std::string getClass() { return classOfDepartment; }
