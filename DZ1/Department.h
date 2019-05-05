@@ -6,6 +6,7 @@
 #include <map>
 #include <algorithm>
 #include <fstream>
+#include "gotoXY.h"
 
 
 
@@ -19,6 +20,12 @@ public:
 	
 	/*virtual Organization getVecOrganizations(int index) = 0;
 	virtual Subdepartment getVecSubDep(int index) = 0;*/
+	virtual void setSaEC(std::string) = 0;
+	virtual void setNameDep(std::string) = 0;
+	virtual void setnumOfSub(int) = 0;
+	virtual void setnumOfOrgan(int) = 0;
+	virtual void setSub(InIt*) = 0;
+	virtual void setInfo(int) = 0;
 	virtual InIt* getInfo() = 0;
 	virtual int getNumOfSub() = 0;
 	virtual int getNumOfOrganizations() = 0;
