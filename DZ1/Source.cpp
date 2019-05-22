@@ -765,8 +765,6 @@ bool Commands(std::vector<std::string> CMD) {
 }
 
 int main() {
-	std::string CMD, v1, v2, v3;
-	int numOfValues;
 	std::cout << "Welcome to Mihail's Base Date of University!\n";
 	bool ENDPROGRAMM = false;
 	std::string command;

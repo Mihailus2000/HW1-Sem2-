@@ -134,7 +134,6 @@
     <ClInclude Include="DataBase.h" />
     <ClInclude Include="Department.h" />
     <ClInclude Include="Exceptions.h" />
-    <ClInclude Include="gotoXY.h" />
     <ClInclude Include="IndustryDepartment.h" />
     <ClInclude Include="Subdepartment and Organization.h" />
   </ItemGroup>
