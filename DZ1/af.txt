@@ -1,0 +1,3 @@
+2
+IU|IUClass|IND|3\IU1|4|Math/1|Rus/15|MOI/2|Phys/66\IU8|5|Math/13|Rus/59|Deth/9|Phys/111|MOI/11\IU10|2|Secret1/1|MOI/2\;1\MGTU|1|HYKpick/999\
+first|saecc|BASE|2\sub1|4|Math/123|MOI/2|Phisics/16|Geography/55\Subd2|2|ä/14|b/14\

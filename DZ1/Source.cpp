@@ -14,9 +14,7 @@
 #include "Exceptions.h"
 #include <sstream>
 #include <experimental/filesystem>
-#include <windows.h>
-#include <shlwapi.h>
-#include <io.h>
+
 
 namespace fs = std::experimental::filesystem;
 
@@ -400,26 +398,25 @@ std::vector<std::string> parser(const std::string CMDFrUser) {
 }
 
 void addBDFromFiles() {
-	WIN32_FIND_DATAW FINDFILEDATA;
-	std::vector<std::wstring> strList;
-	HANDLE hfile = FindFirstFileW(L"*.txt", &FINDFILEDATA);
-	while (hfile != INVALID_HANDLE_VALUE)
-	{
-		strList.push_back(std::wstring(FINDFILEDATA.cFileName));
-		if (!FindNextFileW(hfile, &FINDFILEDATA))
-		{
-			FindClose(hfile);
-			break;
-		}
-	}
-	for (int i = 0; i < strList.size(); ++i) {
-		std::wstring strTMP = strList[i];
-		std::string ss(strTMP.begin(), strTMP.end());
-		BaseData.insert(std::make_pair(ss, new BD(ss)));
-		// копирование информации из файла в объект
-		BaseData.find(ss)->second->ReadFromFile();
+	std::vector<std::string> strList;
 	
-	}
+		std::string path = "C:\\Users\\Mic-PC\\Documents\\MGTU IM BAUMANA\\Алгоритмические языки\\2-ой семестр\\ДЗ\\1.1\\DZ1\\DZ1";
+		for (const auto& entry : fs::directory_iterator(path)) {
+			if (entry.path().extension() == ".txt") {
+				std::cout << entry.path().filename() << std::endl;
+				strList.emplace_back(entry.path().filename().generic_string());
+			}
+		}
+		
+		for (int i = 0; i < strList.size(); ++i) {
+			std::string FileName = strList[i];
+			BaseData.insert(std::make_pair(FileName, new BD(FileName)));
+			// копирование информации из файла в объект
+			BaseData.find(FileName)->second->ReadFromFile();
+
+		}
+
+	
 }
 
 bool Commands(std::vector<std::string> CMD) {
@@ -632,18 +629,12 @@ bool Commands(std::vector<std::string> CMD) {
 			throw "| Warning : File \'" + newBD_Name + "\' already EXISTS!\n\n";
 		}
 		//BaseData.insert(std::make_pair(newBD_Name, new BD(newBD_Name + ".txt")));
-		std::ofstream file(tmpname);
-		file.open(tmpname);
-		if (file.is_open()) {
-			file << 0;
-		}
-		else
-			throw "Error: File wasn't open!!\n\n";
-		file.close();
+		
 		//newIt = ;
 		newObj = new BD(newBD_Name+".txt");
 
 		mode = CMD[3];
+
 		auto It = BaseData.find(nameOfBD + ".txt");
 		if (It != BaseData.end()) {
 			Obj = It->second;
@@ -686,18 +677,52 @@ bool Commands(std::vector<std::string> CMD) {
 					}
 				}
 			}
+
 			if (newObj->getNumOfD() == 0) {
-				remove(tmpname.c_str());
+				/*remove(tmpname.c_str());*/
 				throw "Error : No suitable departments found! BD NOT created!";
 			}
 			else {
-				BaseData.insert(std::make_pair(newBD_Name+".txt", newObj));
-				newObj->WriteToFile();
+				int saveBD = 0;
+
+				std::cout << "\n\n\t\tPicked BD : \n\n";
+				for (int i = 0; i < newObj->getNumOfD(); i++) {
+					newObj->getDepartment(i)->printInfo();
+				}
+
+				std::cout << "\tDo you want to save picked BD? [\'1\' - Yes / Anything else - false] : ";
+				std::cin >> saveBD;
+				if (std::cin.fail()) {
+					/*std::cout << "\tError : Wrong input, try again:\n";*/
+					std::cin.clear();
+					std::cin.ignore(std::cin.rdbuf()->in_avail());
+					std::cout << "\tBD not saved\n\n";
+					return false;
+				}
+				else {
+					std::cin.ignore(std::cin.rdbuf()->in_avail());
+					if (saveBD == 1) {
+						BaseData.insert(std::make_pair(newBD_Name + ".txt", newObj));
+						std::ofstream file(tmpname);
+						file.open(tmpname);
+						if (!file.is_open()) {
+							remove(tmpname.c_str());
+							throw "Sorry: File does't saved!!\n\n";
+						}
+						file.close();
+						newObj->WriteToFile();
+					}
+					else {
+						std::cout << "\tBD not saved\n\n";
+						return false;
+					}
+				}
 			}
 		}
 		std::cout << "\tPicking successful completed! \n";
 		return false;
 	}
+
 	if (ind->second == 8) {
 		if (CMD.size() != 2) {
 			throw "Error: Invalid parameters\n\t >> output(BD_NAME)                   || Display content of DB_NAME \n";
