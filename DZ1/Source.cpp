@@ -404,7 +404,7 @@ void addBDFromFiles() {
 		
 		for (const auto& entry : fs::directory_iterator(path)) {
 			if (entry.path().extension() == ".txt") {
-				std::cout << entry.path().filename() << std::endl;
+				//std::cout << entry.path().filename() << std::endl;
 				strList.emplace_back(entry.path().filename().generic_string());
 			}
 		}
