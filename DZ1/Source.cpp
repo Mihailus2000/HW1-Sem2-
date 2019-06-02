@@ -398,9 +398,10 @@ std::vector<std::string> parser(const std::string CMDFrUser) {
 }
 
 void addBDFromFiles() {
-	std::vector<std::string> strList;
+		std::vector<std::string> strList;
 	
-		std::string path = "C:\\Users\\Mic-PC\\Documents\\MGTU IM BAUMANA\\Алгоритмические языки\\2-ой семестр\\ДЗ\\1.1\\DZ1\\DZ1";
+		std::string path = fs::current_path().string();
+		
 		for (const auto& entry : fs::directory_iterator(path)) {
 			if (entry.path().extension() == ".txt") {
 				std::cout << entry.path().filename() << std::endl;
@@ -416,7 +417,7 @@ void addBDFromFiles() {
 
 		}
 
-	
+		return;
 }
 
 bool Commands(std::vector<std::string> CMD) {
@@ -620,7 +621,7 @@ bool Commands(std::vector<std::string> CMD) {
 		
 		int n;
 		if (CMD.size() != 5)
-			throw "Error: Invalid parameters\n\t >> pick(BD_NAME,BD_NEW,MODE,PARAM)	  || Pick new DB from records of DB_NAME and create new BD BD_NEW by MODE:\n\t >>                                      || If by number of subdepartments(bigger then PARAM) -> MODE = num, if by name of discipline(PARAM) -> MODE = disc\n";
+			throw "Error: Invalid parameters\n\t >> pick(BD_NAME,BD_NEW,MODE,PARAM)	  || Pick new DB from records of DB_NAME and create new BD BD_NEW by MODE:\n\t                                          || If by number of subdepartments(bigger then PARAM) -> MODE = num, if by name of discipline(PARAM) -> MODE = disc\n";
 		nameOfBD = CMD[1];
 		newBD_Name = CMD[2];
 		
