@@ -437,7 +437,7 @@ bool Commands(std::vector<std::string> CMD) {
 		if (CMD.size() != 1) {
 			std::cout << "| Warning : Extra parameters founded |\n\n"; // Добавить желтую подсветку
 		}
-		std::cout << "\t****************************HELP***************************\n";
+		std::cout << "\t********************************************************HELP*******************************************************\n";
 		std::cout << "\t >> help                              || Display all available commands\n";
 		std::cout << "\t >> create(BD_NAME)                   || Create new DB with name = NAME\n";
 		std::cout << "\t >> calc(BD_NAME)                     || Calculate number of disciplines\n";
@@ -451,7 +451,7 @@ bool Commands(std::vector<std::string> CMD) {
 		std::cout << "\t >> list                              || Display all Data bases\n";
 		std::cout << "\t >> exit                              || Close program\n";
 		std::cout << "\t >> delete(BD_NAME)                   || Delete BD_NAME\n";
-		std::cout << "\t***********************************************************\n";
+		std::cout << "\t********************************************************************************************************************\n";
 		return false;
 	}
 
