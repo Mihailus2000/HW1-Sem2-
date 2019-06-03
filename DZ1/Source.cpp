@@ -1,8 +1,5 @@
 #include "BaseDepartment.h"
-//#include "Subdepartment and Organization.h"
 #include "IndustryDepartment.h"
-
-//#include "Commands.h"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -15,43 +12,7 @@
 #include <sstream>
 #include <experimental/filesystem>
 
-
 namespace fs = std::experimental::filesystem;
-
-//------------------------------------------------------------------------------
-//int X, Y;
-//
-//void gotoXY(short x, short y)
-//{
-//  HANDLE    StdOut = GetStdHandle(STD_OUTPUT_HANDLE);
-//  COORD    coord = { x, y };
-//  SetConsoleCursorPosition(StdOut, coord);
-//}
-//void whereXY(int& X, int& Y)
-//{
-//  HANDLE                        StdOut1 = GetStdHandle(STD_OUTPUT_HANDLE);
-//  CONSOLE_SCREEN_BUFFER_INFO    csbi1;
-//  GetConsoleScreenBufferInfo(StdOut1, &csbi1);
-//  X = csbi1.dwCursorPosition.X;
-//
-//  HANDLE                        StdOut2 = GetStdHandle(STD_OUTPUT_HANDLE);
-//  CONSOLE_SCREEN_BUFFER_INFO    csbi2;
-//  GetConsoleScreenBufferInfo(StdOut2, &csbi2);
-//  Y = csbi2.dwCursorPosition.Y;
-//}
-//-----------------------------------------------------------------------------
-
-
-//void Parser(int NumOfValues, std::string value1, std::string value2, std::string value3, std::string CMDin, std::string CMDout) {
-//  if (CMDin == "") {
-//      //exception
-//  }
-//  std::string tmp;
-//  for (int i = 0; i < CMDin.size(); i++) {
-//
-//  }
-//
-//}
 
 class BD {
 	int numOfD = 0;
@@ -151,11 +112,7 @@ public:
 						fout << "\\";
 					else
 						fout << "|";                     
-				}
-				//if (i != Elem_Department->getNumOfSub() - 1) //?????
-				//	fout << "/";
-				//else
-				//	fout << "}";                                      
+				}                                 
 			}
 			if (Elem_Department->getClass() == "IND") {
 				fout << ";" << Elem_Department->getNumOfOrganizations() << "\\"; 
@@ -172,11 +129,7 @@ public:
 							fout << "\\";
 						else
 							fout << "|";                                 
-					}
-					//if (i != Elem_Department->getNumOfSub() - 1) //?????
-					//	fout << "/";
-					//else
-					//	fout << "}";                     
+					}                  
 				}
 			}
 			if (ind == Container.size() - 1)
@@ -317,7 +270,6 @@ public:
 		
 	}
 };
-//std::vector<BD*> BaseData;
 
 std::unordered_map<std::string, BD*> BaseData; // ХРАНИЛИЩЕ ВСЕХ БД
 
@@ -404,7 +356,6 @@ void addBDFromFiles() {
 		
 		for (const auto& entry : fs::directory_iterator(path)) {
 			if (entry.path().extension() == ".txt") {
-				//std::cout << entry.path().filename() << std::endl;
 				strList.emplace_back(entry.path().filename().generic_string());
 			}
 		}
@@ -412,7 +363,6 @@ void addBDFromFiles() {
 		for (int i = 0; i < strList.size(); ++i) {
 			std::string FileName = strList[i];
 			BaseData.insert(std::make_pair(FileName, new BD(FileName)));
-			// копирование информации из файла в объект
 			BaseData.find(FileName)->second->ReadFromFile();
 
 		}
@@ -425,7 +375,7 @@ bool Commands(std::vector<std::string> CMD) {
 	std::string nameOfBD, typeOfD, nameOfDepart;
 	std::unordered_map <std::string, BD*> ::iterator it, newIt;
 	BD* Obj = nullptr;
-	BD* newObj = nullptr;   //??????????????????
+	BD* newObj = nullptr;  
 	std::map<std::string, int> MapOfCMD = {
 		{"help",0},{"create",1}, {"calc", 2},{"find",3},{"add",4},{"remove",5},{"sort",6},{"pick",7},{"output",8},{"list",9},{"exit",10},{"delete",11} };
 	auto ind = MapOfCMD.find(CMD[0]);
@@ -436,7 +386,7 @@ bool Commands(std::vector<std::string> CMD) {
 	if (ind->second == 0) {
 
 		if (CMD.size() != 1) {
-			std::cout << "| Warning : Extra parameters founded |\n\n"; // Добавить желтую подсветку
+			std::cout << "| Warning : Extra parameters founded |\n\n"; 
 		}
 		std::cout << "\t********************************************************HELP*******************************************************\n";
 		std::cout << "\t >> help                              || Display all available commands\n";
@@ -460,8 +410,7 @@ bool Commands(std::vector<std::string> CMD) {
 		if (CMD.size() != 2)
 			throw "Error: Invalid parameters\n\t >> create(BD_NAME)                   || Create new DB with name = NAME\n";
 
-		/*std::cout << "Give name to new BD: ";
-		std::getline(std::cin, nameOfBD);*/
+		
 		nameOfBD = CMD[1];
 		std::string tmpname = nameOfBD + ".txt";
 		if (BaseData.find(tmpname) != BaseData.end()) {
@@ -481,8 +430,7 @@ bool Commands(std::vector<std::string> CMD) {
 	}
 	
 	if (ind->second == 2) {
-		/*std::cout << "Enter NAME of DataBase: <";
-		std::getline(std::cin, nameOfBD);*/
+		
 		if (CMD.size() != 2)
 			throw "Error: Invalid parameters\n\t >> calc(BD_NAME)                     || Calculate number of disciplines\n";
 		nameOfBD = CMD[1];
@@ -520,8 +468,6 @@ bool Commands(std::vector<std::string> CMD) {
 		}
 		if (findDep)
 		{
-			//InIt* findEl = nullptr;
-			//findEl = tmp->getInfo();
 			tmp->printInfo();
 		}
 		else {
@@ -532,24 +478,19 @@ bool Commands(std::vector<std::string> CMD) {
 	}
 		
 	if (ind->second == 4) {
-		/*std::cout << "Enter name of BD where add new element: ";
-		std::cout << "<";
-		std::getline(std::cin, nameOfBD);
-		std::cout << ">\n";*/
 		if (CMD.size() != 4)
 			throw "Error: Invalid parameters\n\t >> add(BD_NAME,DEP_NAME, DEP_T)      || Add new Department DEP_NAME with type: DEP_T = i(industrial) / b(base) in DB_NAME \n";
 		nameOfBD = CMD[1];
 		nameOfDepart = CMD[2];
 		typeOfD = CMD[3];
+		
 		if (BaseData.find(nameOfBD+".txt") != BaseData.end()) {
 			it = BaseData.find(nameOfBD+".txt");
 		}
 		else {
 			throw "Base data doesn't exist!";
 		}
-		/*std::cout << "Enter type of Department: \"b\"> to base department or \"i\"> to industry department:\n";
-		std::getline(std::cin, typeOfD);
-*/
+
 		for (int i = 0; i < it->second->getNumOfD();i++) {
 			if (it->second->getDepartment(i)->getNameOfDep() == nameOfDepart) {
 				throw "| Warning : department already exists! |\n\n";
@@ -567,7 +508,7 @@ bool Commands(std::vector<std::string> CMD) {
 		else {
 			throw "Unknown parameter DEP_T : Available only \'b\' or \i'\'";
 		}
-		//it->second->setDepartment()
+		
 
 		return false;
 	}
@@ -629,9 +570,6 @@ bool Commands(std::vector<std::string> CMD) {
 		if (BaseData.find(tmpname) != BaseData.end()) {
 			throw "| Warning : File \'" + newBD_Name + "\' already EXISTS!\n\n";
 		}
-		//BaseData.insert(std::make_pair(newBD_Name, new BD(newBD_Name + ".txt")));
-		
-		//newIt = ;
 		newObj = new BD(newBD_Name+".txt");
 
 		mode = CMD[3];
@@ -680,7 +618,6 @@ bool Commands(std::vector<std::string> CMD) {
 			}
 
 			if (newObj->getNumOfD() == 0) {
-				/*remove(tmpname.c_str());*/
 				throw "Error : No suitable departments found! BD NOT created!";
 			}
 			else {
@@ -694,7 +631,6 @@ bool Commands(std::vector<std::string> CMD) {
 				std::cout << "\tDo you want to save picked BD? [\'1\' - Yes / Anything else - false] : ";
 				std::cin >> saveBD;
 				if (std::cin.fail()) {
-					/*std::cout << "\tError : Wrong input, try again:\n";*/
 					std::cin.clear();
 					std::cin.ignore(std::cin.rdbuf()->in_avail());
 					std::cout << "\tBD not saved\n\n";
@@ -748,24 +684,18 @@ bool Commands(std::vector<std::string> CMD) {
 	}
 	if (ind->second == 9) {
 		if (CMD.size() != 1) {
-			std::cout << "| Warning : Extra parameters founded |\n\n"; // Добавить желтую подсветку
+			std::cout << "| Warning : Extra parameters founded |\n\n"; 
 		}
 		std::cout << std::endl;
 		std::cout << " List of available Base Dates WITH expansion: \n";
 		for (auto i : BaseData) {
-			/*std::string nameAndType = i.second->getName();
-			for (int j = nameAndType.length()-1; j >= 0; j--) {
-				if (nameAndType[j] == '.') {
-					nameAndType = nameAndType.substr(0, j);
-				}
-			}*/
 			std::cout << "\t\'" << i.second->getName() << "\'\n";
 		}
 		return false;
 	}
 	if (ind->second == 10) {
 		if (CMD.size() != 1) {
-			std::cout << "| Warning : Extra parameters founded |\n\n"; // Добавить желтую подсветку
+			std::cout << "| Warning : Extra parameters founded |\n\n";
 		}
 		return true;
 	}
@@ -805,7 +735,6 @@ int main() {
 				throw Exception("Empty input!");
 
 
-			/*std::transform(command.begin(), command.end(), command.begin(), tolower);*/
 			ENDPROGRAMM = Commands(parser(command));
 			std::cout << "#----------------------------------------------------------------------------------------------------#\n";
 		}

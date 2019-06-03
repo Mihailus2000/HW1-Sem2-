@@ -16,9 +16,7 @@ public:
 	
 	Department() = default;
 	virtual ~Department() = default;
-	
-	/*virtual Organization getVecOrganizations(int index) = 0;
-	virtual Subdepartment getVecSubDep(int index) = 0;*/
+
 	virtual void setSaEC(std::string) = 0;
 	virtual void setNameDep(std::string) = 0;
 	virtual void setnumOfSub(int) = 0;
@@ -34,7 +32,6 @@ public:
 	virtual std::string getNameOfDep() = 0;
 	virtual std::string getClass() = 0;
 	virtual void printInfo() = 0;
-	virtual void readFromFile() = 0;
 
 
 };

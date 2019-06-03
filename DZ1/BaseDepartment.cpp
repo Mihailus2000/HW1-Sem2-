@@ -1,30 +1,5 @@
 #include "BaseDepartment.h"
 
-//void BaseDepartment::WriteToFile() {
-//	std::ofstream fout;
-//	fout.open(PATH, std::ios_base::app);
-//	fout << "{" << this->nameOfDepartment << ":{" << this->SaEC << "},{";
-//	for (int i = 0; i < numOfSubdepartments; i++) {
-//		fout << Subdepartments[i].nameOfSubdep << ":{";
-//		for (int j = 0; j < Subdepartments[i].numOfDisciplines; j++) {
-//			fout << Subdepartments[i].Disciplines[j].name << ":<" <<
-//				Subdepartments[i].Disciplines[j].numberOfTeachers << ">";
-//			if (j != j < Subdepartments[i].numOfDisciplines - 1)
-//				fout << ";";
-//			else
-//				fout << "}";
-//		}
-//		if (i != numOfSubdepartments - 1)
-//			fout << "/";
-//		else
-//			fout << "}";
-//	}
-//
-//}
-
-void BaseDepartment::readFromFile(/*std::string*/) {}
-
-
 void BaseDepartment::printInfo() {
 	
 	if (numOfSubdepartments != 0) {
@@ -42,12 +17,9 @@ void BaseDepartment::printInfo() {
 				std::string nameOf_j_Disc = getInfo()->getVecSubDep(i).getVecDisc(j).getName();
 				int numOfTeachers_j_Disc = getInfo()->getVecSubDep(i).getVecDisc(j).getNumOfTeachers();
 				std::cout << "\t";
-				//std::cout.clear();
 				std::cout.width(33 + nameOf_j_Disc.length());
 				std::cout << nameOf_j_Disc;
-				//std::cout.clear();
 				std::cout.width(18 - nameOf_j_Disc.length() + 12 + std::to_string(numOfTeachers_j_Disc).length());
-				//int tmp = 18 - nameOf_j_Disc.length() + 12 + std::to_string(numOfTeachers_j_Disc).length();
 				std::cout << std::to_string(numOfTeachers_j_Disc) << std::endl;
 
 				std::cout << std::endl;
@@ -57,7 +29,6 @@ void BaseDepartment::printInfo() {
 	else {
 		std::cout << "| Warning : No subdepartments in " << nameOfDepartment << " |\n";
 	}
-	//std::cout << "sum: " << sumOfSub;
 	std::cout << std::endl;
 }
 

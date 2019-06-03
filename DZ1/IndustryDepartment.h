@@ -5,7 +5,6 @@
 
 class IndustryDepartment : public Department {
 private:
-	//std::string PATH;
 	const std::string classOfDepartment = "IND";
 	std::string nameOfDepartment;
 	std::string SaEC;			 //Scientific and educational complex
@@ -13,9 +12,6 @@ private:
 	int numOfOrganizations;
 	InIt* SubAndOrgan = new InIt;
 	
-	//
-	//std::vector<Subdepartment> vecSubDep; // вектор кафедр
-	//std::vector<Organization> vecOrganizations; // вектор организаций
 public:
 	
 	IndustryDepartment(std::string name) : nameOfDepartment(name) {
@@ -35,8 +31,6 @@ public:
 
 	virtual void setSub(InIt* element) { SubAndOrgan = element; }
 
-	/*virtual Organization getVecOrganizations(int index) { return vecOrganizations[index]; }
-	virtual Subdepartment getVecSubDep(int index) { return vecSubDep[index]; }*/
 	virtual InIt* getInfo() { return SubAndOrgan; }
 	virtual void setInfo(int mode) { 
 		if(mode == 1)
@@ -51,7 +45,6 @@ public:
 	virtual int getNumOfSub() { return numOfSubdepartments; }
 	virtual int getNumOfOrganizations() { return numOfOrganizations; }
 	virtual void WriteToFile() {};
-	virtual void readFromFile() {};
 	virtual void printInfo();
 	virtual int calcNumOfSubjects() { return SubAndOrgan->calcSumCount(classOfDepartment); };
 

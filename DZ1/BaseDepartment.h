@@ -13,7 +13,6 @@ private:
 	int numOfSubdepartments;
 	InIt* Subdep = new InIt;
 
-	//std::vector<Subdepartment> vecSubDep; // вектор кафедр
 public:
 	BaseDepartment() {};
 	
@@ -30,7 +29,6 @@ public:
 	virtual void setnumOfOrgan(int) { throw "Something go wrong in 28 letter BaseDepartment!!"; };
 	virtual void setSub(InIt* element) { Subdep = element; }
 
-	//virtual Subdepartment getVecSubDep(int index) { return (vecSubDep[index]); }
 	virtual InIt* getInfo() { return Subdep; }
 	virtual void setInfo(int tmp) { Subdep->FillSubDep(nameOfDepartment); }
 	
@@ -41,7 +39,6 @@ public:
 	virtual std::string getNameOfDep() { return nameOfDepartment; }
 	virtual std::string getClass() { return classOfDepartment; }
 	virtual int getNumOfOrganizations() { return -1; } //CODE ERROR
-	virtual void readFromFile(/*std::string*/);
 	virtual int calcNumOfSubjects() { return Subdep->calcSumCount(classOfDepartment); };
 };
 
